@@ -1,0 +1,38 @@
+version: "3"
+services:
+# Prometheus metrics
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+    - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml 
+    - /Users/cafasaru/data/goarchive/prometheus_data:/prometheus
+    ports:
+      - 9090:9090
+    restart: always
+# Grafana data visualization
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    user: "472"
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - /Users/cafasaru/data/goarchive/grafana_data:/var/lib/grafana
+      - /Users/cafasaru/data/goarchive/grafana_data/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./grafana/config.monitoring
+    restart: always
+# Tracing middleware 
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+    - 9411:9411
+    restart: always
+
+networks:
+  default:
+    name: goarchive_default
