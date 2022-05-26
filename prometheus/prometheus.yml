@@ -13,3 +13,8 @@ scrape_configs:
     # scheme defaults to 'http'.
     static_configs:
       - targets: ["host.docker.internal:8080"]
+  - job_name: "goarchive-groups"
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+    static_configs:
+      - targets: ["host.docker.internal:8800"]

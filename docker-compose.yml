@@ -6,7 +6,7 @@ services:
     container_name: prometheus
     volumes:
     - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml 
-    - /Users/cafasaru/data/goarchive/prometheus_data:/prometheus
+    - "$GOARCHIVE_ROOT/prometheus_data:/prometheus"
     ports:
       - 9090:9090
     restart: always
@@ -20,8 +20,8 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - /Users/cafasaru/data/goarchive/grafana_data:/var/lib/grafana
-      - /Users/cafasaru/data/goarchive/grafana_data/provisioning/:/etc/grafana/provisioning/
+      - "$GOARCHIVE_ROOT/grafana_data:/var/lib/grafana"
+      - "$GOARCHIVE_ROOT/grafana_data/provisioning/:/etc/grafana/provisioning/"
     env_file:
       - ./grafana/config.monitoring
     restart: always
